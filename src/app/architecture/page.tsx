@@ -4,16 +4,16 @@ import { Layers } from "lucide-react";
 
 export default function ArchitecturePage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 space-y-8">
-      <div className="border-b border-slate-800 pb-6 space-y-2">
-        <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 font-mono text-xs text-blue-300">
-          <Layers className="h-3.5 w-3.5" />
+    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 space-y-8">
+      <div className="border-b border-white/[0.07] pb-6 space-y-3">
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.09] bg-white/[0.03] px-3 py-1 font-mono text-[11px] text-zinc-300">
+          <Layers className="h-3.5 w-3.5 text-blue-400" />
           <span>MODULE 03 • INTERACTIVE REACT FLOW ARCHITECTURE EXPLORER</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-white">
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
           Interactive Architecture &amp; Protocol Flow Explorer
         </h1>
-        <p className="text-xs sm:text-sm text-slate-300 max-w-3xl">
+        <p className="text-xs sm:text-sm text-zinc-400 max-w-3xl leading-relaxed">
           Switch across 9 interactive architectural diagrams covering the high-level
           7-layer stack, modular backend services, identity creation, personal-data
           permission flows, application interoperability, discovery ranking, content

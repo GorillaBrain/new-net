@@ -1,132 +1,328 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Shield, Menu, X, Sparkles } from "lucide-react";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  Layers,
+  ArrowUpRight,
+  Terminal,
+} from "lucide-react";
 import { NAV_ITEMS } from "@/lib/nav-items";
 
 export function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<"arch" | "dev" | null>(null);
+  const navRef = useRef<HTMLDivElement>(null);
+
+  const archItems = NAV_ITEMS.filter((i) => i.category === "Architecture");
+  const devItems = NAV_ITEMS.filter((i) => i.category === "Developers");
+
+  useEffect(() => {
+    setMobileOpen(false);
+    setOpenDropdown(null);
+  }, [pathname]);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setOpenDropdown(null);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const isArchActive = archItems.some((i) => pathname.startsWith(i.href));
+  const isDevActive = devItems.some((i) => pathname.startsWith(i.href));
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-[#07090e]/90 backdrop-blur-xl">
-      {/* Top Research Telemetry Bar */}
-      <div className="border-b border-slate-800/60 bg-[#05070b] px-4 py-1.5 text-[11px] font-mono text-slate-400">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="inline-block h-2 w-2 rounded-full bg-blue-400 animate-pulse" />
-            <span className="text-slate-200 font-semibold">NEW NET ARCHITECTURE SPEC v0.9.4</span>
-            <span className="hidden sm:inline text-slate-500">|</span>
-            <span className="hidden sm:inline text-slate-400">
-              Proposed Next-Generation Sovereign Internet Architecture Under Research &amp; Development
-            </span>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="text-emerald-400">WebCrypto ECDSA/SHA-256: ACTIVE</span>
-            <span className="text-slate-600">•</span>
-            <span className="text-blue-400">Adapter: DEMO_STATE_ENGINE</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Navigation */}
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-blue-500/40 bg-blue-500/10 text-blue-400 transition group-hover:border-blue-400 group-hover:bg-blue-500/20">
-            <Shield className="h-5 w-5" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-base font-bold tracking-wider text-white">
-                NEW NET
-              </span>
-              <span className="rounded border border-violet-500/40 bg-violet-500/10 px-1.5 py-0.2 font-mono text-[10px] text-violet-300">
-                R&amp;D ARCH
+    <header
+      ref={navRef}
+      className="sticky top-0 z-50 border-b border-white/[0.07] bg-[#08090a]/85 backdrop-blur-md"
+    >
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* Left: Brand Identity */}
+        <div className="flex items-center gap-6">
+          <Link
+            href="/"
+            className="flex items-center gap-3 group focus-visible:rounded-md"
+          >
+            <div className="flex h-8 w-8 items-center justify-center rounded-md border border-white/[0.12] bg-[#12141a] text-zinc-100 transition-colors group-hover:border-blue-500/50 group-hover:text-blue-400">
+              <span className="font-mono text-xs font-bold tracking-tighter">
+                NN
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 hidden sm:block">
-              Sovereign • Decentralised • Verifiable
-            </p>
-          </div>
-        </Link>
+            <div className="flex items-center gap-2.5">
+              <span className="font-mono text-sm font-semibold tracking-tight text-zinc-100">
+                NEW NET
+              </span>
+              <span className="hidden sm:inline-flex items-center gap-1.5 rounded border border-white/[0.08] bg-white/[0.03] px-2 py-0.5 font-mono text-[10px] text-zinc-400">
+                <span className="h-1.5 w-1.5 rounded-full bg-blue-400" />
+                SPEC v0.9.4
+              </span>
+            </div>
+          </Link>
+        </div>
 
-        {/* Desktop Compact Nav Links */}
-        <nav className="hidden xl:flex items-center gap-1">
-          {NAV_ITEMS.map((item) => {
-            const active =
-              item.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors flex items-center gap-1.5 ${
-                  active
-                    ? "bg-blue-500/15 text-blue-300 border border-blue-500/40"
-                    : "text-slate-400 hover:text-slate-100 hover:bg-slate-800/60 border border-transparent"
+        {/* Center: Desktop Grouped Navigation */}
+        <nav
+          aria-label="Main Navigation"
+          className="hidden lg:flex items-center gap-1"
+        >
+          <Link
+            href="/"
+            className={`rounded-md px-3 py-1.5 text-[13px] font-medium transition-colors ${
+              pathname === "/"
+                ? "text-white bg-white/[0.06]"
+                : "text-zinc-400 hover:text-zinc-100 hover:bg-white/[0.03]"
+            }`}
+          >
+            Overview
+          </Link>
+
+          <Link
+            href="/vision"
+            className={`rounded-md px-3 py-1.5 text-[13px] font-medium transition-colors ${
+              pathname.startsWith("/vision")
+                ? "text-white bg-white/[0.06]"
+                : "text-zinc-400 hover:text-zinc-100 hover:bg-white/[0.03]"
+            }`}
+          >
+            Vision
+          </Link>
+
+          {/* Dropdown 1: Technical Architecture (04–07) */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() =>
+                setOpenDropdown(openDropdown === "arch" ? null : "arch")
+              }
+              aria-expanded={openDropdown === "arch"}
+              className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-[13px] font-medium transition-colors ${
+                isArchActive || openDropdown === "arch"
+                  ? "text-white bg-white/[0.06]"
+                  : "text-zinc-400 hover:text-zinc-100 hover:bg-white/[0.03]"
+              }`}
+            >
+              <span>Infrastructure &amp; Specs</span>
+              <ChevronDown
+                className={`h-3.5 w-3.5 text-zinc-500 transition-transform duration-150 ${
+                  openDropdown === "arch" ? "rotate-180 text-zinc-200" : ""
                 }`}
-              >
-                <span className="font-mono text-[10px] text-slate-500">
-                  {item.number}
-                </span>
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
-        </nav>
+              />
+            </button>
 
-        {/* Mobile / Tablet Menu Button */}
-        <div className="flex items-center gap-2 xl:hidden">
+            {openDropdown === "arch" && (
+              <div className="absolute left-0 mt-2 w-[360px] rounded-xl border border-white/[0.09] bg-[#0e1014] p-2 shadow-2xl">
+                <div className="px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-wider text-zinc-500">
+                  Core Technical Subsystems
+                </div>
+                <div className="space-y-0.5">
+                  {archItems.map((item) => {
+                    const Icon = item.icon;
+                    const active = pathname.startsWith(item.href);
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={`flex items-start gap-3 rounded-lg p-2.5 transition-colors ${
+                          active
+                            ? "bg-blue-500/[0.08] text-white"
+                            : "hover:bg-white/[0.04] text-zinc-300"
+                        }`}
+                      >
+                        <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-white/[0.08] bg-[#14171d] text-zinc-300">
+                          <Icon className="h-3.5 w-3.5 text-blue-400" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-medium text-zinc-100">
+                              {item.label}
+                            </span>
+                            <span className="font-mono text-[10px] text-zinc-500">
+                              {item.number}
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-zinc-400 leading-snug mt-0.5">
+                            {item.description}
+                          </p>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+
           <Link
             href="/playground"
-            className="inline-flex items-center gap-1.5 rounded-md border border-blue-500/40 bg-blue-500/10 px-3 py-1.5 text-xs font-mono text-blue-300"
+            className={`rounded-md px-3 py-1.5 text-[13px] font-medium transition-colors ${
+              pathname.startsWith("/playground")
+                ? "text-white bg-white/[0.06]"
+                : "text-zinc-400 hover:text-zinc-100 hover:bg-white/[0.03]"
+            }`}
           >
-            <Sparkles className="h-3.5 w-3.5" />
+            Playground
+          </Link>
+
+          {/* Dropdown 2: Developers & Research (08–10) */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() =>
+                setOpenDropdown(openDropdown === "dev" ? null : "dev")
+              }
+              aria-expanded={openDropdown === "dev"}
+              className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-[13px] font-medium transition-colors ${
+                (isDevActive && !pathname.startsWith("/playground")) ||
+                openDropdown === "dev"
+                  ? "text-white bg-white/[0.06]"
+                  : "text-zinc-400 hover:text-zinc-100 hover:bg-white/[0.03]"
+              }`}
+            >
+              <span>API &amp; Roadmap</span>
+              <ChevronDown
+                className={`h-3.5 w-3.5 text-zinc-500 transition-transform duration-150 ${
+                  openDropdown === "dev" ? "rotate-180 text-zinc-200" : ""
+                }`}
+              />
+            </button>
+
+            {openDropdown === "dev" && (
+              <div className="absolute right-0 mt-2 w-[340px] rounded-xl border border-white/[0.09] bg-[#0e1014] p-2 shadow-2xl">
+                <div className="px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-wider text-zinc-500">
+                  Verification, APIs &amp; Timeline
+                </div>
+                <div className="space-y-0.5">
+                  {devItems.map((item) => {
+                    const Icon = item.icon;
+                    const active = pathname.startsWith(item.href);
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={`flex items-start gap-3 rounded-lg p-2.5 transition-colors ${
+                          active
+                            ? "bg-blue-500/[0.08] text-white"
+                            : "hover:bg-white/[0.04] text-zinc-300"
+                        }`}
+                      >
+                        <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-white/[0.08] bg-[#14171d] text-zinc-300">
+                          <Icon className="h-3.5 w-3.5 text-blue-400" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-medium text-zinc-100">
+                              {item.label}
+                            </span>
+                            <span className="font-mono text-[10px] text-zinc-500">
+                              {item.number}
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-zinc-400 leading-snug mt-0.5">
+                            {item.description}
+                          </p>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        </nav>
+
+        {/* Right: Prominent Architecture Explorer CTA + Mobile Trigger */}
+        <div className="flex items-center gap-2.5">
+          <Link
+            href="/playground"
+            className="hidden sm:inline-flex lg:hidden items-center gap-1.5 rounded-lg border border-white/[0.09] bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-zinc-200 hover:bg-white/[0.06]"
+          >
+            <Terminal className="h-3.5 w-3.5 text-zinc-400" />
             <span>Playground</span>
           </Link>
+
+          <Link
+            href="/architecture"
+            className={`inline-flex items-center gap-2 rounded-lg px-3.5 py-1.5 text-xs font-medium transition-all ${
+              pathname.startsWith("/architecture")
+                ? "bg-blue-600 text-white shadow-sm"
+                : "border border-blue-500/30 bg-blue-500/[0.12] text-blue-300 hover:bg-blue-500/[0.2] hover:border-blue-500/50 hover:text-white"
+            }`}
+          >
+            <Layers className="h-3.5 w-3.5" />
+            <span>Architecture Explorer</span>
+            <ArrowUpRight className="h-3 w-3 opacity-75 hidden sm:inline" />
+          </Link>
+
           <button
             type="button"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle navigation menu"
-            className="rounded-md border border-slate-800 bg-slate-900/80 p-2 text-slate-300 hover:text-white"
+            aria-expanded={mobileOpen}
+            className="inline-flex lg:hidden items-center justify-center rounded-lg border border-white/[0.09] bg-[#0e1014] p-2 text-zinc-300 hover:text-white"
           >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileOpen ? (
+              <X className="h-4 w-4" />
+            ) : (
+              <Menu className="h-4 w-4" />
+            )}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile & Tablet Navigation Drawer */}
       {mobileOpen && (
-        <div className="border-t border-slate-800 bg-[#090c14] px-4 py-4 xl:hidden">
-          <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
-            {NAV_ITEMS.map((item) => {
-              const Icon = item.icon;
-              const active =
-                item.href === "/"
-                  ? pathname === "/"
-                  : pathname.startsWith(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-3 rounded-lg border px-3 py-2.5 text-xs font-medium ${
-                    active
-                      ? "border-blue-500/40 bg-blue-500/15 text-blue-300"
-                      : "border-slate-800/80 bg-slate-900/40 text-slate-300 hover:bg-slate-800/60"
-                  }`}
-                >
-                  <Icon className="h-4 w-4 text-blue-400" />
-                  <span className="font-mono text-[10px] text-slate-500">
-                    {item.number}
-                  </span>
-                  <span>{item.label}</span>
-                </Link>
-              );
-            })}
+        <div className="border-t border-white/[0.07] bg-[#08090a] px-4 py-5 lg:hidden">
+          <div className="mx-auto max-w-7xl space-y-5">
+            <div className="flex items-center justify-between border-b border-white/[0.06] pb-3 font-mono text-[11px] text-zinc-400">
+              <span>All 10 Architecture Modules</span>
+              <span className="text-emerald-400">WebCrypto: Active</span>
+            </div>
+
+            <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
+              {NAV_ITEMS.map((item) => {
+                const Icon = item.icon;
+                const active =
+                  item.href === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={`flex items-start gap-3 rounded-lg border p-3 transition-colors ${
+                      active
+                        ? "border-blue-500/40 bg-blue-500/[0.08] text-white"
+                        : "border-white/[0.06] bg-[#0e1014] text-zinc-300 hover:border-white/[0.12]"
+                    }`}
+                  >
+                    <Icon className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-medium text-zinc-100">
+                          {item.label}
+                        </span>
+                        <span className="font-mono text-[10px] text-zinc-500">
+                          {item.number}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-zinc-400 mt-0.5 line-clamp-1">
+                        {item.description}
+                      </p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}

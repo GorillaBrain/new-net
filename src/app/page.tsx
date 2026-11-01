@@ -1,343 +1,301 @@
 import React from "react";
 import Link from "next/link";
-import {
-  STRUCTURAL_PROBLEMS,
-  SEVEN_LAYERS,
-  ARCHITECTURAL_COMPARISON,
-  TWELVE_PRINCIPLES,
-} from "@/lib/architecture-data";
+import { ARCHITECTURAL_COMPARISON } from "@/lib/architecture-data";
 import { StatusBadge } from "@/components/StatusBadge";
+import { HeroTopology } from "@/components/HeroTopology";
+import { FailureModesGrid } from "@/components/FailureModesGrid";
+import { InteractiveSevenLayerStack } from "@/components/InteractiveSevenLayerStack";
+import { PrinciplesGrid } from "@/components/PrinciplesGrid";
 import {
   ArrowRight,
+  ArrowUpRight,
   Layers,
   Terminal,
-  Shield,
-  FileCode2,
-  Compass,
-  CheckCircle2,
-  AlertTriangle,
-  Sparkles,
   Server,
+  Radio,
+  Lock,
+  Bot,
+  FileCode2,
+  Map,
 } from "lucide-react";
+
+const SHOWCASE_CARDS = [
+  {
+    number: "03",
+    title: "Architecture Explorer",
+    href: "/architecture",
+    icon: Layers,
+    status: "IMPLEMENTED" as const,
+    description:
+      "Interactive 9-diagram React Flow topology covering all 7 layers, capability gates, and threat boundaries.",
+  },
+  {
+    number: "04",
+    title: "Backend Infrastructure",
+    href: "/backend",
+    icon: Server,
+    status: "IMPLEMENTED" as const,
+    description:
+      "Modular Next.js route handlers, persistence adapter transparency, and critical evaluation of 7 protocol stacks.",
+  },
+  {
+    number: "05",
+    title: "Information Ecosystem",
+    href: "/information",
+    icon: Radio,
+    status: "IMPLEMENTED" as const,
+    description:
+      "User-selected ranking lenses, C2PA version lineage, CIDv1 preservation, and authenticity vs. truth boundaries.",
+  },
+  {
+    number: "06",
+    title: "Security Architecture",
+    href: "/security",
+    icon: Lock,
+    status: "IMPLEMENTED" as const,
+    description:
+      "Zero-trust cryptographic boundaries and 11 adversarial threat models with prevention, detection, and recovery specs.",
+  },
+  {
+    number: "07",
+    title: "AI & Automation",
+    href: "/ai",
+    icon: Bot,
+    status: "IMPLEMENTED" as const,
+    description:
+      "Fiduciary Personal AI agents operating inside deterministic out-of-context UCAN sandboxes with human approval gates.",
+  },
+  {
+    number: "08",
+    title: "Interactive Playground",
+    href: "/playground",
+    icon: Terminal,
+    status: "IMPLEMENTED" as const,
+    description:
+      "8 live functional labs: generate ECDSA P-256 DIDs, revoke Pod access, tune feed weights, and test tamper detection.",
+  },
+  {
+    number: "09",
+    title: "API Documentation",
+    href: "/api-docs",
+    icon: FileCode2,
+    status: "IMPLEMENTED" as const,
+    description:
+      "Complete schemas, auth boundaries, and live request execution console for all 15 backend endpoints.",
+  },
+  {
+    number: "10",
+    title: "Research & Roadmap",
+    href: "/roadmap",
+    icon: Map,
+    status: "RESEARCH REQUIRED" as const,
+    description:
+      "7-phase systems engineering roadmap with milestones, protocol dependencies, risks, and open research questions.",
+  },
+];
 
 export default function HomePage() {
   return (
-    <div className="space-y-20 pb-20">
-      {/* HERO SECTION */}
-      <section className="relative border-b border-slate-800/80 bg-gradient-to-b from-[#0b1020] via-[#07090e] to-[#07090e] pt-16 pb-20">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3.5 py-1 text-xs font-mono text-blue-300 mb-6">
-            <Sparkles className="h-3.5 w-3.5 text-blue-400" />
-            <span>PROPOSED NEXT-GENERATION INTERNET ARCHITECTURE UNDER R&amp;D</span>
-          </div>
-
-          <h1 className="max-w-4xl font-mono text-3xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.08]">
-            THE INTERNET DOESN’T HAVE TO WORK THIS WAY.
-          </h1>
-
-          <p className="mt-6 max-w-3xl text-base sm:text-lg text-slate-300 leading-relaxed">
-            An exploration of a more open, private, secure, interoperable, and
-            individually controlled internet.
-          </p>
-
-          <p className="mt-4 max-w-3xl text-xs sm:text-sm text-slate-400 leading-relaxed">
-            <strong>Foundational Principle:</strong> The individual should own their
-            digital life, not the platforms they use. NEW NET is not another social
-            media platform, browser, or SaaS web app—it is a seven-layer architectural
-            blueprint and interactive reference implementation built around self-sovereign
-            identity, personal data pods, content-addressed preservation, user-selected
-            discovery algorithms, cryptographic provenance, and fiduciary personal AI.
-          </p>
-
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Link
-              href="/architecture"
-              className="inline-flex items-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-500 px-5 py-3 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-blue-950/50 transition"
-            >
-              <Layers className="h-4 w-4" />
-              <span>Launch Interactive Architecture Explorer</span>
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              href="/playground"
-              className="inline-flex items-center gap-2 rounded-lg border border-violet-500/40 bg-violet-500/15 hover:bg-violet-500/25 px-5 py-3 text-xs sm:text-sm font-semibold text-violet-200 transition"
-            >
-              <Terminal className="h-4 w-4" />
-              <span>Run 8 Live Cryptographic &amp; Pod Labs</span>
-            </Link>
-            <Link
-              href="/api-docs"
-              className="inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-900/80 hover:bg-slate-800 px-4 py-3 text-xs sm:text-sm font-mono text-slate-200 transition"
-            >
-              <FileCode2 className="h-4 w-4 text-blue-400" />
-              <span>Inspect 15 Live API Endpoints</span>
-            </Link>
-          </div>
-
-          {/* Implementation Status Honesty Banner */}
-          <div className="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-xl border border-slate-800 bg-[#0b0f19]/90 p-4">
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-[10px] text-slate-400">STATUS TAXONOMY 01</span>
-                <StatusBadge status="IMPLEMENTED" size="xs" />
+    <div className="space-y-24 pb-24">
+      {/* 1. EDITORIAL HERO SECTION */}
+      <section className="relative border-b border-white/[0.07] bg-hero-glow pt-14 pb-20 sm:pt-20 sm:pb-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center">
+            {/* Left Column: Editorial Headline & CTAs */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center gap-2.5 rounded-full border border-white/[0.09] bg-white/[0.03] px-3 py-1 font-mono text-[11px] text-zinc-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-blue-400" />
+                <span>ARCHITECTURE RESEARCH INITIATIVE • SPEC v0.9.4</span>
               </div>
-              <p className="text-xs text-slate-300">
-                Real Web Crypto ECDSA P-256 key generation, SHA-256 CID hashing, 15 Zod-validated Next.js API routes, and interactive React Flow &amp; Playground labs.
+
+              <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-[56px] lg:leading-[1.08]">
+                The Internet Doesn&apos;t Have to Work This Way.
+              </h1>
+
+              <p className="max-w-2xl text-base sm:text-lg text-zinc-300 leading-relaxed font-normal">
+                An exploration of a more open, private, secure, interoperable,
+                and individually controlled internet. Built around self-sovereign
+                identity, encrypted personal data pods, content-addressed
+                preservation, and fiduciary personal AI.
               </p>
+
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <Link
+                  href="/architecture"
+                  className="inline-flex items-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-500 px-5 py-2.5 text-sm font-medium text-white transition-colors"
+                >
+                  <Layers className="h-4 w-4" />
+                  <span>Explore Architecture</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+
+                <Link
+                  href="/playground"
+                  className="inline-flex items-center gap-2 rounded-lg border border-white/[0.12] bg-[#12141a] hover:bg-[#181b22] hover:border-white/[0.2] px-5 py-2.5 text-sm font-medium text-zinc-100 transition-colors"
+                >
+                  <Terminal className="h-4 w-4 text-blue-400" />
+                  <span>Launch Interactive Playground</span>
+                </Link>
+              </div>
+
+              {/* Compact Research & Implementation Status Strip */}
+              <div className="pt-4 border-t border-white/[0.06] flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[11px] text-zinc-400">
+                <div className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                  <span>WebCrypto ECDSA / SHA-256: Implemented</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-blue-400" />
+                  <span>15 Route Handlers: Live</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-zinc-400" />
+                  <span>P2P Relay Mesh: Simulated</span>
+                </div>
+              </div>
             </div>
-            <div className="rounded-xl border border-slate-800 bg-[#0b0f19]/90 p-4">
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-[10px] text-slate-400">STATUS TAXONOMY 02</span>
-                <StatusBadge status="SIMULATED" size="xs" />
-              </div>
-              <p className="text-xs text-slate-300">
-                Multi-region IPFS/Solid/Arweave replica pinning and Sybil burst telemetry demonstrated via our clearly labelled Demonstration Persistence Adapter.
-              </p>
-            </div>
-            <div className="rounded-xl border border-slate-800 bg-[#0b0f19]/90 p-4">
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-[10px] text-slate-400">STATUS TAXONOMY 03</span>
-                <StatusBadge status="PROPOSED" size="xs" />
-              </div>
-              <p className="text-xs text-slate-300">
-                IETF MLS (RFC 9420) group key ratcheting, raw libp2p QUIC hole-punching, and composable multi-community moderation arbitration protocols.
-              </p>
-            </div>
-            <div className="rounded-xl border border-slate-800 bg-[#0b0f19]/90 p-4">
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-[10px] text-slate-400">STATUS TAXONOMY 04</span>
-                <StatusBadge status="RESEARCH REQUIRED" size="xs" />
-              </div>
-              <p className="text-xs text-slate-300">
-                Post-quantum zero-knowledge BBS+ credentials, state-level partition healing, and sustainable non-surveillance cooperative economics at global scale.
-              </p>
+
+            {/* Right Column: Subtle Interactive Node Topology Visualization */}
+            <div className="lg:col-span-5">
+              <HeroTopology />
             </div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 1: THE STRUCTURAL PROBLEMS OF TODAY'S INTERNET */}
-      <section className="mx-auto max-w-7xl px-4 space-y-8">
-        <div className="flex flex-col justify-between gap-4 border-b border-slate-800 pb-5 md:flex-row md:items-end">
-          <div>
-            <span className="font-mono text-xs uppercase tracking-wider text-rose-400">
-              01 • DIAGNOSTIC ANALYSIS
+      {/* 2. INTERNET FAILURE MODES (6-CARD GRID) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="flex flex-col justify-between gap-4 border-b border-white/[0.07] pb-6 md:flex-row md:items-end">
+          <div className="space-y-2">
+            <span className="font-mono text-xs uppercase tracking-wider text-blue-400">
+              01 / Diagnostic Analysis
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mt-1">
-              Why Do We Need a New Internet Architecture?
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+              Structural Failure Modes of Today&apos;s Internet
             </h2>
-            <p className="text-sm text-slate-400 mt-1 max-w-3xl">
-              Today’s internet problems are not merely policy or moderation mistakes—they
-              are direct structural consequences of centralized identity, siloed databases,
-              location-based links, and surveillance-advertising incentives.
+            <p className="max-w-3xl text-sm text-zinc-400 leading-relaxed">
+              Modern internet pathologies are not isolated policy oversights—they
+              are direct architectural consequences of centralized identity,
+              siloed application databases, mutable location-based links, and
+              surveillance-advertising business models.
             </p>
           </div>
           <Link
             href="/vision"
-            className="inline-flex items-center gap-1.5 font-mono text-xs text-blue-400 hover:text-blue-300 shrink-0"
+            className="inline-flex items-center gap-1.5 font-mono text-xs text-zinc-300 hover:text-blue-400 transition-colors shrink-0"
           >
-            <span>Read Full Vision &amp; Anti-Decay Spec</span>
-            <ArrowRight className="h-3.5 w-3.5" />
+            <span>Read Anti-Decay Specification</span>
+            <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {STRUCTURAL_PROBLEMS.map((prob) => (
-            <div
-              key={prob.id}
-              className="rounded-xl border border-slate-800 bg-[#0b0f19] p-5 flex flex-col justify-between space-y-4 hover:border-slate-700 transition"
-            >
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="rounded border border-rose-500/30 bg-rose-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-rose-300">
-                    {prob.severity} FAILURE MODE
-                  </span>
-                  <AlertTriangle className="h-4 w-4 text-rose-400" />
-                </div>
-                <h3 className="text-base font-bold text-white">{prob.title}</h3>
-                <p className="text-xs text-slate-400">{prob.subtitle}</p>
-                <ul className="space-y-1.5 pt-1 text-xs text-slate-300">
-                  {prob.issues.map((iss) => (
-                    <li key={iss} className="flex items-start gap-2">
-                      <span className="text-rose-400 mt-0.5">•</span>
-                      <span>{iss}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="rounded-lg border border-blue-500/25 bg-blue-500/5 p-3">
-                <div className="font-mono text-[10px] uppercase text-blue-400 mb-1">
-                  NEW NET Architectural Countermeasure
-                </div>
-                <p className="text-xs text-slate-200">{prob.newNetCountermeasure}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <FailureModesGrid />
       </section>
 
-      {/* SECTION 2: THE 7-LAYER ARCHITECTURE STACK */}
-      <section className="mx-auto max-w-7xl px-4 space-y-8">
-        <div className="flex flex-col justify-between gap-4 border-b border-slate-800 pb-5 md:flex-row md:items-end">
-          <div>
+      {/* 3. INTERACTIVE SEVEN-LAYER ARCHITECTURE EXPLORER */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="flex flex-col justify-between gap-4 border-b border-white/[0.07] pb-6 md:flex-row md:items-end">
+          <div className="space-y-2">
             <span className="font-mono text-xs uppercase tracking-wider text-blue-400">
-              02 • THE SEVEN INTERCONNECTED LAYERS
+              02 / Core System Architecture
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mt-1">
-              The NEW NET 7-Layer Stack
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+              Interactive Seven-Layer Architecture
             </h2>
-            <p className="text-sm text-slate-400 mt-1 max-w-3xl">
-              Decentralisation does not automatically guarantee security, privacy, truth,
-              or freedom. Each layer enforces explicit cryptographic guarantees while
-              documenting its real-world limitations.
+            <p className="max-w-3xl text-sm text-zinc-400 leading-relaxed">
+              Decentralisation does not automatically guarantee security,
+              privacy, truth, or freedom. Select any layer below to inspect its
+              cryptographic guarantees, open standards, implementation status,
+              and engineering caveats.
             </p>
           </div>
           <Link
             href="/architecture"
-            className="inline-flex items-center gap-1.5 font-mono text-xs text-blue-400 hover:text-blue-300 shrink-0"
+            className="inline-flex items-center gap-1.5 font-mono text-xs text-zinc-300 hover:text-blue-400 transition-colors shrink-0"
           >
-            <span>Open Interactive 9-Diagram React Flow Explorer</span>
-            <ArrowRight className="h-3.5 w-3.5" />
+            <span>Open Full 9-Diagram Node Canvas</span>
+            <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
         </div>
 
-        <div className="space-y-4">
-          {SEVEN_LAYERS.map((layer) => (
-            <div
-              key={layer.id}
-              className={`rounded-xl border ${layer.borderColor} bg-gradient-to-r ${layer.color} p-5`}
-            >
-              <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/15 bg-[#07090e] font-mono text-xs font-bold text-white">
-                    L{layer.layer}
-                  </span>
-                  <div>
-                    <h3 className="text-base font-bold text-white">{layer.name}</h3>
-                    <p className="text-xs text-slate-300">{layer.tagline}</p>
-                  </div>
-                </div>
-                <StatusBadge status={layer.status} />
-              </div>
-
-              <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 pt-2">
-                <div className="lg:col-span-7">
-                  <div className="font-mono text-[10px] uppercase text-slate-400 mb-1.5">
-                    Core Architectural Capabilities
-                  </div>
-                  <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2 text-xs text-slate-200">
-                    {layer.capabilities.map((cap) => (
-                      <div key={cap} className="flex items-start gap-1.5">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                        <span>{cap}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="lg:col-span-5 flex flex-col justify-between space-y-3 rounded-lg border border-slate-800/80 bg-[#07090e]/90 p-3.5">
-                  <div>
-                    <div className="font-mono text-[10px] uppercase text-slate-400 mb-1">
-                      Protocols &amp; Standards
-                    </div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {layer.protocols.map((p) => (
-                        <span
-                          key={p}
-                          className="rounded border border-slate-700 bg-slate-900 px-2 py-0.5 font-mono text-[10px] text-blue-300"
-                        >
-                          {p}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="border-t border-slate-800 pt-2 text-[11px] text-amber-300/90">
-                    <strong className="font-mono uppercase text-[10px]">
-                      Engineering Caveat:{" "}
-                    </strong>
-                    {layer.criticalCaveat}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <InteractiveSevenLayerStack />
       </section>
 
-      {/* SECTION 3: 12 CORE PRINCIPLES */}
-      <section className="mx-auto max-w-7xl px-4 space-y-6">
-        <div className="border-b border-slate-800 pb-4">
-          <span className="font-mono text-xs uppercase tracking-wider text-violet-400">
-            03 • CORE PHILOSOPHY
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mt-1">
-            Twelve Architectural Principles
-          </h2>
+      {/* 4. TWELVE ARCHITECTURAL PRINCIPLES */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="flex flex-col justify-between gap-4 border-b border-white/[0.07] pb-6 md:flex-row md:items-end">
+          <div className="space-y-2">
+            <span className="font-mono text-xs uppercase tracking-wider text-blue-400">
+              03 / Foundational Philosophy
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+              Twelve Architectural Principles
+            </h2>
+            <p className="max-w-3xl text-sm text-zinc-400 leading-relaxed">
+              The individual should own their digital life, not the platforms
+              they use. Click any principle card to inspect its underlying
+              cryptographic and systems mechanism.
+            </p>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {TWELVE_PRINCIPLES.map((p) => (
-            <div
-              key={p.number}
-              className="rounded-xl border border-slate-800 bg-[#0b0f19] p-4 space-y-2"
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs font-bold text-blue-400">
-                  PRINCIPLE #{String(p.number).padStart(2, "0")}
-                </span>
-              </div>
-              <h3 className="text-sm font-bold text-white">{p.title}</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                {p.description}
-              </p>
-              <div className="pt-1 font-mono text-[10px] text-violet-300">
-                Mechanism: {p.architecturalMechanism}
-              </div>
-            </div>
-          ))}
-        </div>
+        <PrinciplesGrid />
       </section>
 
-      {/* SECTION 4: ARCHITECTURAL COMPARISON MATRIX (13 DIMENSIONS) */}
-      <section className="mx-auto max-w-7xl px-4 space-y-6">
-        <div className="border-b border-slate-800 pb-4">
-          <span className="font-mono text-xs uppercase tracking-wider text-emerald-400">
-            04 • COMPARATIVE EVALUATION (13 DIMENSIONS)
+      {/* 5. COMPARATIVE EVALUATION (13 DIMENSIONS) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="space-y-2 border-b border-white/[0.07] pb-6">
+          <span className="font-mono text-xs uppercase tracking-wider text-blue-400">
+            04 / Comparative Evaluation
           </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mt-1">
-            Dominant Platform Internet vs. NEW NET Architecture
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+            Dominant Platform Model vs. NEW NET Architecture
           </h2>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            Not every existing service suffers from identical weaknesses (e.g., Signal
-            and local-first tools already excel in specific areas). This matrix compares
-            the dominant ad-funded platform paradigm with NEW NET’s integrated stack.
+          <p className="max-w-3xl text-sm text-zinc-400 leading-relaxed">
+            Not every existing service suffers from identical weaknesses—tools
+            like Signal, Git, and local-first editors already protect specific
+            domains. This 13-dimension matrix evaluates how NEW NET integrates
+            self-sovereign identity, personal pods, and provenance across the
+            entire stack.
           </p>
         </div>
 
-        <div className="overflow-x-auto rounded-xl border border-slate-800 bg-[#0b0f19]">
-          <table className="w-full text-left border-collapse">
+        <div className="overflow-x-auto rounded-xl border border-white/[0.08] bg-[#0e1014]">
+          <table className="w-full min-w-[880px] text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-800 bg-[#07090e] font-mono text-[11px] uppercase text-slate-400">
-                <th className="p-3.5">Architectural Dimension</th>
-                <th className="p-3.5 text-rose-300">Dominant Platform Model</th>
-                <th className="p-3.5 text-emerald-300">NEW NET Sovereign Architecture</th>
-                <th className="p-3.5 text-blue-300">Engineering Nuance &amp; Prior Art</th>
+              <tr className="border-b border-white/[0.08] bg-[#08090a] font-mono text-[11px] uppercase tracking-wider text-zinc-400">
+                <th className="py-3.5 px-4 w-[18%]">Dimension</th>
+                <th className="py-3.5 px-4 w-[27%] text-zinc-300">
+                  Dominant Platform Paradigm
+                </th>
+                <th className="py-3.5 px-4 w-[31%] text-blue-300">
+                  NEW NET Sovereign Architecture
+                </th>
+                <th className="py-3.5 px-4 w-[24%] text-zinc-400">
+                  Engineering Nuance &amp; Prior Art
+                </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/80 text-xs">
-              {ARCHITECTURAL_COMPARISON.map((row) => (
-                <tr key={row.dimension} className="hover:bg-slate-900/40">
-                  <td className="p-3.5 font-semibold text-white whitespace-nowrap">
+            <tbody className="divide-y divide-white/[0.05] text-xs">
+              {ARCHITECTURAL_COMPARISON.map((row, idx) => (
+                <tr
+                  key={row.dimension}
+                  className={
+                    idx % 2 === 0
+                      ? "bg-[#0e1014] hover:bg-white/[0.02]"
+                      : "bg-[#0b0d10] hover:bg-white/[0.02]"
+                  }
+                >
+                  <td className="py-4 px-4 font-mono text-xs font-medium text-zinc-100 align-top">
                     {row.dimension}
                   </td>
-                  <td className="p-3.5 text-slate-400 leading-relaxed">
+                  <td className="py-4 px-4 text-zinc-400 leading-relaxed align-top">
                     {row.legacyModel}
                   </td>
-                  <td className="p-3.5 text-slate-200 leading-relaxed">
+                  <td className="py-4 px-4 text-zinc-100 leading-relaxed align-top border-l border-white/[0.04] bg-blue-500/[0.02]">
                     {row.newNetModel}
                   </td>
-                  <td className="p-3.5 text-slate-400 italic leading-relaxed">
+                  <td className="py-4 px-4 text-zinc-400 leading-relaxed align-top">
                     {row.nuanceNote}
                   </td>
                 </tr>
@@ -347,54 +305,59 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SECTION 5: COMPLETE 10-MODULE NAVIGATION DIRECTORY */}
-      <section className="mx-auto max-w-7xl px-4">
-        <div className="rounded-2xl border border-blue-500/30 bg-gradient-to-r from-blue-950/30 via-[#0b0f19] to-violet-950/30 p-6 sm:p-8">
-          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
-            <div className="space-y-2 max-w-2xl">
-              <span className="font-mono text-xs uppercase text-blue-400">
-                CONTINUE EXPLORING THE TECHNICAL SHOWCASE
-              </span>
-              <h3 className="text-xl sm:text-2xl font-bold text-white">
-                Inspect Every Layer, Threat Model, Live API &amp; Playground Lab
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-300">
-                Every module in NEW NET is interactive: test real WebCrypto signatures,
-                revoke Pod permissions, tune feed algorithms, inspect 11 threat models,
-                or execute live requests against our 15 API endpoints.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3">
+      {/* 6. TECHNICAL SHOWCASE DIRECTORY (8 MODULES) */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="space-y-2 border-b border-white/[0.07] pb-6">
+          <span className="font-mono text-xs uppercase tracking-wider text-blue-400">
+            05 / Interactive Technical Showcase
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+            Explore Subsystems, Threat Models &amp; Live Labs
+          </h2>
+          <p className="max-w-3xl text-sm text-zinc-400 leading-relaxed">
+            Every architectural subsystem in NEW NET can be inspected, tested,
+            and verified directly in your browser.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {SHOWCASE_CARDS.map((card) => {
+            const Icon = card.icon;
+            return (
               <Link
-                href="/vision"
-                className="inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-900 hover:bg-slate-800 px-4 py-2.5 text-xs font-semibold text-white"
+                key={card.href}
+                href={card.href}
+                className="group flex flex-col justify-between rounded-xl border border-white/[0.08] bg-[#0e1014] p-5 transition-all hover:border-blue-500/40 hover:bg-[#12151c]"
               >
-                <Compass className="h-4 w-4 text-blue-400" />
-                <span>02. Vision &amp; Anti-Decay</span>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-[#14171d] text-blue-400 group-hover:border-blue-500/40">
+                      <Icon className="h-4 w-4" />
+                    </div>
+                    <span className="font-mono text-[11px] text-zinc-500">
+                      MODULE {card.number}
+                    </span>
+                  </div>
+
+                  <h3 className="text-sm font-semibold text-zinc-100 group-hover:text-white flex items-center justify-between">
+                    <span>{card.title}</span>
+                    <ArrowUpRight className="h-3.5 w-3.5 text-zinc-500 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-blue-400" />
+                  </h3>
+
+                  <p className="text-xs leading-relaxed text-zinc-400">
+                    {card.description}
+                  </p>
+                </div>
+
+                <div className="mt-5 pt-3 border-t border-white/[0.05] flex items-center justify-between">
+                  <StatusBadge status={card.status} size="xs" />
+                  <span className="font-mono text-[10px] text-zinc-500 group-hover:text-blue-400">
+                    Open →
+                  </span>
+                </div>
               </Link>
-              <Link
-                href="/architecture"
-                className="inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-900 hover:bg-slate-800 px-4 py-2.5 text-xs font-semibold text-white"
-              >
-                <Layers className="h-4 w-4 text-violet-400" />
-                <span>03. Architecture Explorer</span>
-              </Link>
-              <Link
-                href="/backend"
-                className="inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-900 hover:bg-slate-800 px-4 py-2.5 text-xs font-semibold text-white"
-              >
-                <Server className="h-4 w-4 text-cyan-400" />
-                <span>04. Backend Infrastructure</span>
-              </Link>
-              <Link
-                href="/security"
-                className="inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-900 hover:bg-slate-800 px-4 py-2.5 text-xs font-semibold text-white"
-              >
-                <Shield className="h-4 w-4 text-emerald-400" />
-                <span>06. 11 Threat Models</span>
-              </Link>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </section>
     </div>

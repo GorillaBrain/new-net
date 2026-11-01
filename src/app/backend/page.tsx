@@ -65,50 +65,50 @@ const BACKEND_SERVICES = [
 
 export default function BackendInfrastructurePage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 space-y-16">
+    <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 space-y-16">
       {/* Header */}
-      <div className="border-b border-slate-800 pb-8 space-y-3">
-        <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 font-mono text-xs text-cyan-300">
-          <Server className="h-3.5 w-3.5" />
+      <div className="border-b border-white/[0.07] pb-8 space-y-3">
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.09] bg-white/[0.03] px-3 py-1 font-mono text-[11px] text-zinc-300">
+          <Server className="h-3.5 w-3.5 text-blue-400" />
           <span>MODULE 04 • MODULAR BACKEND INFRASTRUCTURE &amp; TECH EVALUATION</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-white">
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
           Backend Services, Persistence Honesty &amp; Protocol Stack
         </h1>
-        <p className="text-sm sm:text-base text-slate-300 max-w-3xl leading-relaxed">
+        <p className="text-sm sm:text-base text-zinc-400 max-w-3xl leading-relaxed">
           NEW NET’s backend is built with modular Next.js App Router Route Handlers,
           TypeScript, Zod schema validation, and the native Web Crypto API.
         </p>
       </div>
 
       {/* Persistence Adapter Honesty Box */}
-      <section className="rounded-2xl border border-blue-500/40 bg-blue-950/20 p-6 space-y-3">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase text-blue-300">
-            <Database className="h-4 w-4 text-blue-400" />
-            <span>ARCHITECTURAL HONESTY: PERSISTENCE &amp; NETWORK ADAPTER BOUNDARY</span>
+      <section className="rounded-2xl border border-white/[0.09] bg-[#0e1014] p-6 sm:p-7 space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.06] pb-4">
+          <div className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-blue-400">
+            <Database className="h-4 w-4" />
+            <span>Architectural Honesty: Persistence &amp; Network Adapter Boundary</span>
           </div>
           <StatusBadge status="IMPLEMENTED" />
         </div>
-        <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+        <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
           <strong>We never pretend a mock or centralized database is decentralised infrastructure.</strong>{" "}
           When deployed on Vercel without external <code className="text-blue-300">SUPABASE_URL</code>{" "}
           credentials, our backend automatically runs in{" "}
           <code className="text-emerald-300">DEMONSTRATION_ADAPTER</code> mode. In this mode:
         </p>
-        <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 text-xs text-slate-300 pt-1">
-          <li className="flex items-start gap-2">
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 text-xs text-zinc-300 pt-1">
+          <li className="flex items-start gap-2.5 rounded-xl border border-white/[0.06] bg-[#08090a] p-4">
             <ShieldCheck className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
             <span>
-              <strong>100% Real Cryptography:</strong> ECDSA P-256 key generation, JWK
+              <strong className="text-zinc-100">100% Real Cryptography:</strong> ECDSA P-256 key generation, JWK
               exports, SHA-256 content addressing, and digital signature verification
               execute genuinely via Node.js 24 &amp; Browser Web Crypto APIs.
             </span>
           </li>
-          <li className="flex items-start gap-2">
+          <li className="flex items-start gap-2.5 rounded-xl border border-white/[0.06] bg-[#08090a] p-4">
             <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
             <span>
-              <strong>Clearly Labelled Network Simulation:</strong> Multi-region IPFS Kubo,
+              <strong className="text-zinc-100">Clearly Labelled Network Simulation:</strong> Multi-region IPFS Kubo,
               Solid Pod, and Arweave replica states are simulated deterministically so
               visitors can test permissions, revocations, and exports safely without
               running a local P2P daemon.
@@ -121,16 +121,16 @@ export default function BackendInfrastructurePage() {
       <section className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <span className="font-mono text-xs uppercase text-blue-400">
-              MODULAR SERVICE ARCHITECTURE
+            <span className="font-mono text-xs uppercase tracking-wider text-blue-400">
+              01 / Modular Service Architecture
             </span>
-            <h2 className="text-2xl font-bold text-white mt-1">
+            <h2 className="text-2xl font-bold tracking-tight text-white mt-1">
               8 Core Backend Services (15 Active Route Handlers)
             </h2>
           </div>
           <Link
             href="/api-docs"
-            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-500 px-4 py-2.5 text-xs font-semibold text-white transition"
+            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-500 px-4 py-2 text-xs font-medium text-white transition-colors"
           >
             <FileCode2 className="h-4 w-4" />
             <span>Execute Live Requests in API Docs</span>
@@ -142,14 +142,14 @@ export default function BackendInfrastructurePage() {
           {BACKEND_SERVICES.map((svc) => (
             <div
               key={svc.name}
-              className="rounded-xl border border-slate-800 bg-[#0b0f19] p-5 space-y-2.5"
+              className="rounded-xl border border-white/[0.08] bg-[#0e1014] p-5 space-y-2.5"
             >
               <div className="flex items-center justify-between gap-2">
-                <h3 className="text-sm font-bold text-white">{svc.name}</h3>
+                <h3 className="text-sm font-semibold text-zinc-100">{svc.name}</h3>
                 <StatusBadge status={svc.status} size="xs" />
               </div>
               <div className="font-mono text-[11px] text-blue-400">{svc.route}</div>
-              <p className="text-xs text-slate-300 leading-relaxed">{svc.role}</p>
+              <p className="text-xs text-zinc-400 leading-relaxed">{svc.role}</p>
             </div>
           ))}
         </div>
@@ -158,13 +158,13 @@ export default function BackendInfrastructurePage() {
       {/* Technology Stack Evaluation */}
       <section className="space-y-6">
         <div>
-          <span className="font-mono text-xs uppercase text-violet-400">
-            CRITICAL PROTOCOL &amp; TECHNOLOGY EVALUATION
+          <span className="font-mono text-xs uppercase tracking-wider text-blue-400">
+            02 / Critical Protocol &amp; Technology Evaluation
           </span>
-          <h2 className="text-2xl font-bold text-white mt-1">
+          <h2 className="text-2xl font-bold tracking-tight text-white mt-1">
             Evaluating Decentralised &amp; Cryptographic Technologies
           </h2>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-3xl">
+          <p className="text-xs sm:text-sm text-zinc-400 mt-1 max-w-3xl">
             No protocol is a silver bullet. Before incorporating Solid, IPFS, ActivityPub,
             libp2p, WebRTC, Web Crypto, DIDs, and MLS, we evaluate their suitability,
             limitations, alternatives, and security implications.
@@ -175,53 +175,53 @@ export default function BackendInfrastructurePage() {
           {TECHNOLOGY_EVALUATIONS.map((tech) => (
             <div
               key={tech.name}
-              className="rounded-xl border border-slate-800 bg-[#0b0f19] p-5 space-y-4"
+              className="rounded-xl border border-white/[0.08] bg-[#0e1014] p-6 space-y-5"
             >
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.06] pb-3.5">
                 <div>
-                  <span className="font-mono text-[10px] uppercase text-blue-400">
+                  <span className="font-mono text-[10px] uppercase tracking-wider text-blue-400">
                     {tech.category}
                   </span>
-                  <h3 className="text-base font-bold text-white">{tech.name}</h3>
+                  <h3 className="text-base font-semibold text-white mt-0.5">{tech.name}</h3>
                 </div>
                 <StatusBadge status={tech.status} />
               </div>
 
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 text-xs">
-                <div className="space-y-1">
-                  <div className="font-mono text-[10px] uppercase text-slate-400">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4 text-xs">
+                <div className="space-y-1.5">
+                  <div className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">
                     Purpose &amp; Suitability
                   </div>
-                  <p className="text-slate-200 leading-relaxed">{tech.purpose}</p>
+                  <p className="text-zinc-200 leading-relaxed">{tech.purpose}</p>
                   <p className="text-emerald-400 text-[11px] pt-1">{tech.suitability}</p>
                 </div>
 
-                <div className="space-y-1">
-                  <div className="font-mono text-[10px] uppercase text-amber-400">
+                <div className="space-y-1.5">
+                  <div className="font-mono text-[10px] uppercase tracking-wider text-amber-400">
                     Architectural Limitations
                   </div>
-                  <p className="text-slate-300 leading-relaxed">{tech.limitations}</p>
+                  <p className="text-zinc-400 leading-relaxed">{tech.limitations}</p>
                 </div>
 
-                <div className="space-y-1">
-                  <div className="font-mono text-[10px] uppercase text-violet-400">
+                <div className="space-y-1.5">
+                  <div className="font-mono text-[10px] uppercase tracking-wider text-zinc-400">
                     Evaluated Alternatives
                   </div>
-                  <ul className="space-y-1 text-slate-300">
+                  <ul className="space-y-1.5 text-zinc-300">
                     {tech.alternatives.map((alt) => (
-                      <li key={alt} className="flex items-start gap-1.5">
-                        <Cpu className="h-3.5 w-3.5 text-violet-400 shrink-0 mt-0.5" />
+                      <li key={alt} className="flex items-start gap-2">
+                        <Cpu className="h-3.5 w-3.5 text-blue-400 shrink-0 mt-0.5" />
                         <span>{alt}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="space-y-1">
-                  <div className="font-mono text-[10px] uppercase text-emerald-400">
+                <div className="space-y-1.5">
+                  <div className="font-mono text-[10px] uppercase tracking-wider text-emerald-400">
                     Security Implications
                   </div>
-                  <p className="text-slate-300 leading-relaxed">
+                  <p className="text-zinc-400 leading-relaxed">
                     {tech.securityImplications}
                   </p>
                 </div>
